@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>{{title}}</title>
+		{{#styles}}
+			<link rel="stylesheet" href="{{{.}}}" />
+		{{/styles}}
+		{{#scripts}}
+			<script type="text/javascript" src="{{{.}}}"></script>
+		{{/scripts}}
+	</head>
+	<body>
+		<div id='root'>{{{content}}}</div>
+		<script type="text/javascript">
+			/*
+				Boot strap react!
+			*/
+			function bootstrap(initial_state) {
+				const sagastore = new Bootstrap.SynchronizedState(initial_state,'/app/ws');
+				const base_app = App.build_root(sagastore.store);
+				ReactDOM.hydrate(base_app,document.getElementById('root'));
+			}
+
+			bootstrap(JSON.parse('{{{initial_state}}}'));
+		</script>
+	</body>
+</html>
